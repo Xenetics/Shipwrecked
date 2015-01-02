@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
 	}
 
     private int musicAmount = 1;
-    public GameObject MusicPlayer;
+    public GameObject[] MusicPlayer; // maked this an array to use multiple musics so its a more general sound manager.
     private GameObject[] Musics;
     public AudioClip[] Sounds;
     public bool musicOn { get; set; }
@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 	void Start () 
 	{
         Musics = new GameObject[musicAmount];
-        FillMusics();
+        //FillMusics();
 	}
 	
 	void Update () 
@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-
+    /*
     private void FillMusics()
     {
         GameObject add0 = (GameObject)Instantiate(MusicPlayer, Camera.main.transform.position, Quaternion.identity);
@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour
         //Musics[0].audio.mute = true;
         Musics[0].audio.mute = false;
     }
-
+    */
     public void ToggleMusic(bool toggle)
     {
         musicOn = toggle;

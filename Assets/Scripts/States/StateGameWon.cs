@@ -17,12 +17,13 @@ public class StateGameWon : GameState
 	public override void StateUpdate() {}
 	public override void StateGUI() 
 	{
+        GUILayout.Label("Won");
         time += Time.deltaTime;
         if (time >= 48)
         {
             AudioManager.Instance.leaveState = true;
             gameManager.NewGameState(gameManager.stateGameMenu);
-            Application.LoadLevel("Menu");
+            Application.LoadLevel("menu");
         }
 	}
 }

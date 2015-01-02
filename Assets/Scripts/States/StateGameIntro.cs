@@ -21,7 +21,7 @@ public class StateGameIntro : GameState
         time += Time.deltaTime;
         if (!riffPlaying && time > 2)
         {
-            AudioManager.Instance.PlaySound("guitar");
+            AudioManager.Instance.PlaySound("guitarIntro");
             riffPlaying = true;
         }
         if (time >= 6)
@@ -32,6 +32,6 @@ public class StateGameIntro : GameState
     }
     public override void StateGUI()
     {
-        //GUILayout.Label("Timer:" + time);
+        GUILayout.Label("Intro");
     }
 }

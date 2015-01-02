@@ -18,6 +18,7 @@ public class StateGameLost : GameState
 	public override void StateUpdate() {}
 	public override void StateGUI() 
 	{
+        GUILayout.Label("Lost");
         time += Time.deltaTime;
         if (!laughPlaying && time > 0.1)
         {
@@ -28,7 +29,7 @@ public class StateGameLost : GameState
         {
             AudioManager.Instance.leaveState = true;
             gameManager.NewGameState(gameManager.stateGameMenu);
-            Application.LoadLevel("Menu");
+            Application.LoadLevel("menu");
         }
 	}
 }

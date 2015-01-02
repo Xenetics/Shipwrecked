@@ -37,6 +37,9 @@ public class StateGamePlaying : GameState
 	
 	public override void StateGUI() 
 	{
+        GUILayout.Label("Playing");
+
+        /*
         GUI.skin = GuiManager.GetSkin();
 
 		if(isPaused)
@@ -74,6 +77,7 @@ public class StateGamePlaying : GameState
         {
 
         }
+        */
 	}
 	
 	private void ResumeGameMode() 
