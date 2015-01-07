@@ -19,17 +19,14 @@ public class StateGameLost : GameState
 	public override void StateGUI() 
 	{
         GUILayout.Label("Lost");
+        /*
         time += Time.deltaTime;
-        if (!laughPlaying && time > 0.1)
-        {
-            AudioManager.Instance.PlaySound("lostSound");
-            laughPlaying = true;
-        }
         if (time >= 8)
         {
             AudioManager.Instance.leaveState = true;
             gameManager.NewGameState(gameManager.stateGameMenu);
             Application.LoadLevel("menu");
         }
+        */
 	}
 }

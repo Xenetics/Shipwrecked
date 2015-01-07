@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BoatManager : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class BoatManager : MonoBehaviour
 
         leftSpawning = false;
         rightSpawning = false;
+
+        levelNumber = LevelManager.Instance.levelChosen;
+        GetLevelData();
+        boatsLeft = boatsInLevel;
     }
 
     [SerializeField]
@@ -44,17 +49,19 @@ public class BoatManager : MonoBehaviour
     private char[] boatOrder; // char tags for boats in what order
 
     private int boatsInLevel; // how many boats are in this level
+    public int boatsLeft; // how many boats remain to be eaten
     private int boatsAtStart = 3; // how many ship at the beginning of the level
 
     private int boatToSpawn = 0; // what boat we are currently on
 
     public bool leftSpawning { get; set; } // left is currently spawning a boat
     public bool rightSpawning { get; set; } // right is currently spawning a boat
+
+    private List<GameObject> boats;
 	
 	void Start () 
     {
-        levelNumber = LevelManager.Instance.levelChosen;
-        GetLevelData();
+        boats = new List<GameObject>();    
         StarterShips();
 	}
 	
@@ -78,13 +85,19 @@ public class BoatManager : MonoBehaviour
                 case 's':
                     if (!leftSpawning)
                     {
-                        Instantiate(smallBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(smallBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = smallBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
                     else if (!rightSpawning)
                     {
-                        Instantiate(smallBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(smallBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = smallBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
@@ -92,13 +105,19 @@ public class BoatManager : MonoBehaviour
                 case 'm':
                     if (!leftSpawning)
                     {
-                        Instantiate(mediumBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(mediumBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = mediumBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
                     else if (!rightSpawning)
                     {
-                        Instantiate(mediumBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(mediumBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = mediumBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
@@ -106,13 +125,19 @@ public class BoatManager : MonoBehaviour
                 case 'l':
                     if (!leftSpawning)
                     {
-                        Instantiate(largeBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(largeBoat, new Vector3(LeftSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = largeBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
                     else if (!rightSpawning)
                     {
-                        Instantiate(largeBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                        GameObject boat = Instantiate(largeBoat, new Vector3(RightSpawn.transform.position.x, seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                        boat.name = largeBoat.name;
+                        boat.transform.parent = this.transform;
+                        boats.Add(boat);
                         boatsAfloat++;
                         boatToSpawn++;
                     }
@@ -125,20 +150,30 @@ public class BoatManager : MonoBehaviour
     {
         for(int i = 1; i <= boatsAtStart ; i++)
         {
+            GameObject boat;
             switch (boatOrder[boatToSpawn])
             {
                 case 's':
-                    Instantiate(smallBoat, new Vector3( -10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                    boat = Instantiate(smallBoat, new Vector3(-10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                    boat.name = smallBoat.name;
+                    boat.transform.parent = this.transform;
+                    boats.Add(boat);
                     boatsAfloat++;
                     boatToSpawn++;
                     break;
                 case 'm':
-                    Instantiate(mediumBoat, new Vector3(-10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                    boat = Instantiate(mediumBoat, new Vector3(-10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                    boat.name = mediumBoat.name;
+                    boat.transform.parent = this.transform;
+                    boats.Add(boat);
                     boatsAfloat++;
                     boatToSpawn++;
                     break;
                 case 'l':
-                    Instantiate(largeBoat, new Vector3(-10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity);
+                    boat = Instantiate(largeBoat, new Vector3(-10 + (5 * i), seaLevel + 0.1f, -0.3f), Quaternion.identity) as GameObject;
+                    boat.name = largeBoat.name;
+                    boat.transform.parent = this.transform;
+                    boats.Add(boat);
                     boatsAfloat++;
                     boatToSpawn++;
                     break;
@@ -153,19 +188,44 @@ public class BoatManager : MonoBehaviour
         boatOrder = temp.shipOrder;
     }
 
-    private void testLevel() // just for testing till I have level XML File
+    public void Reset()
     {
-        boatsInLevel = 10;
-        boatOrder = new char[boatsInLevel];
-        boatOrder[0] = 's';
-        boatOrder[1] = 's';
-        boatOrder[2] = 's';
-        boatOrder[3] = 's';
-        boatOrder[4] = 's';
-        boatOrder[5] = 's';
-        boatOrder[6] = 's';
-        boatOrder[7] = 's';
-        boatOrder[8] = 's';
-        boatOrder[9] = 's';
+        int size = boats.Count;
+        for (int i = 0; i < boats.Count; i++)
+        {
+            if(boats[i] != null)
+            {
+                Destroy(boats[i]);
+            }
+        }
+        boats.Clear();
+        boatToSpawn = 0;
+        boatsLeft = boatsInLevel;
+        StarterShips();
+    }
+
+    public void DisableBoats(bool active)
+    {
+        for (int i = 0; i < boats.Count; i++)
+        {
+            if (boats[i] != null)
+            {
+                boats[i].gameObject.SetActive(active);
+            }
+        }
+    }
+
+    public void  NextLevel()
+    {
+        if (LevelManager.Instance.levelChosen < LevelManager.Instance.totalLevels)
+        {
+            LevelManager.Instance.levelChosen++;
+        }
+        levelNumber = LevelManager.Instance.levelChosen;
+        GetLevelData();
+        boatsLeft = boatsInLevel;
+        boatToSpawn = 0;
+
+        StarterShips();
     }
 }

@@ -15,9 +15,24 @@ public class PlayerController : MonoBehaviour
     private float hSpeed;
     private float groundLevel;
     private float seaLevel = 7f;
+    public Vector3 playerStartPos { get; set; }
+
+    private static PlayerController instance = null;
+    public static PlayerController Instance { get { return instance; } }
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+
+        playerStartPos = entity.transform.position;
         groundLevel = entity.transform.position.y;
     }
 
@@ -28,52 +43,55 @@ public class PlayerController : MonoBehaviour
 	
 	void Update () 
     {
-        if (isAlive)
+        if (GameManager.WhatState() == "playing" && InGameUIManager.Instance.paused == false)
         {
-            if (grounded)
+            if (isAlive)
             {
-                hSpeed = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-                hSpeed *= Time.deltaTime;
-                entity.transform.Translate(hSpeed, 0, 0, null);
+                if (grounded)
+                {
+                    hSpeed = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                    hSpeed *= Time.deltaTime;
+                    entity.transform.Translate(hSpeed, 0, 0, null);
 
-                if (Input.GetButtonDown("Jump"))
-                {
-                    attacking = true;
-                }
-            }
-            else
-            {
-                if (!eating)
-                {
-                    entity.transform.Translate(0, -(Time.deltaTime * gravity), 0, null);
+                    if (Input.GetButtonDown("Jump"))
+                    {
+                        attacking = true;
+                    }
                 }
                 else
                 {
-                    eatTime -= Time.deltaTime;
-                    if(eatTime <= 0.0f)
+                    if (!eating)
                     {
-                        eating = false;
+                        entity.transform.Translate(0, -(Time.deltaTime * gravity), 0, null);
+                    }
+                    else
+                    {
+                        eatTime -= Time.deltaTime;
+                        if (eatTime <= 0.0f)
+                        {
+                            eating = false;
+                        }
                     }
                 }
-            }
-            
-            if(attacking)
-            {
-                entity.transform.Translate(0, Time.deltaTime * attackSpeed, 0, null);
-            }
 
-            if (entity.transform.position.y >= seaLevel)
-            {
-                attacking = false;
-            }
+                if (attacking)
+                {
+                    entity.transform.Translate(0, Time.deltaTime * attackSpeed, 0, null);
+                }
 
-            if (entity.transform.position.y <= groundLevel)
-            {
-                grounded = true;
-            }
-            else
-            {
-                grounded = false;
+                if (entity.transform.position.y >= seaLevel)
+                {
+                    attacking = false;
+                }
+
+                if (entity.transform.position.y <= groundLevel)
+                {
+                    grounded = true;
+                }
+                else
+                {
+                    grounded = false;
+                }
             }
         }
 
@@ -110,5 +128,13 @@ public class PlayerController : MonoBehaviour
                 BoatManager.Instance.boatsAfloat--;
             }
         }
+    }
+
+    public void Reset()
+    {
+        entity.transform.position = playerStartPos;
+        isAlive = true;
+        attacking = false;
+        eating = false;
     }
 }

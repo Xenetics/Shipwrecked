@@ -25,7 +25,6 @@ public class StateGamePlaying : GameState
 			if (isPaused)
 			{
 				ResumeGameMode();
-                
 			}
 			else
 			{
@@ -84,11 +83,13 @@ public class StateGamePlaying : GameState
 	{
 		Time.timeScale = 1.0f;
 		isPaused = false;
+        InGameUIManager.Instance.Paused(false);
 	}
 	
 	private void PauseGameMode() 
 	{
 		Time.timeScale = 0.0f;
 		isPaused = true;
+        InGameUIManager.Instance.Paused(true);
 	}
 }

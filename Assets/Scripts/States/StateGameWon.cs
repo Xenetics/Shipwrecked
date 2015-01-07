@@ -18,6 +18,7 @@ public class StateGameWon : GameState
 	public override void StateGUI() 
 	{
         GUILayout.Label("Won");
+        /*
         time += Time.deltaTime;
         if (time >= 48)
         {
@@ -25,5 +26,6 @@ public class StateGameWon : GameState
             gameManager.NewGameState(gameManager.stateGameMenu);
             Application.LoadLevel("menu");
         }
+        */
 	}
 }

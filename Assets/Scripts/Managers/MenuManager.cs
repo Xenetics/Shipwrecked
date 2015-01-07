@@ -50,7 +50,6 @@ public class MenuManager : MonoBehaviour
             if (transitionTimerActual <= 1 && canvasSwapped == false)
             {
                 Transition(buttonPushed);
-                canvasSwapped = true;
             }
 
             if (transitionTimerActual <= 0)
@@ -59,6 +58,7 @@ public class MenuManager : MonoBehaviour
                 transitionMonster.transform.position = moveBack;
                 transitioning = false;
                 transitionTimerActual = transitionTimer;
+                canvasSwapped = false;
             }
         }
 
@@ -70,6 +70,7 @@ public class MenuManager : MonoBehaviour
         {
             menuCanvas.gameObject.SetActive(false);
             levelsCanvas.gameObject.SetActive(true);
+            canvasSwapped = true;
             if (lvlButtons == null)
             {
                 GetLvlButtons();
@@ -79,16 +80,24 @@ public class MenuManager : MonoBehaviour
         {
             menuCanvas.gameObject.SetActive(false);
             creditsCanvas.gameObject.SetActive(true);
+            canvasSwapped = true;
         }
         else if (button == "options")
         {
             menuCanvas.gameObject.SetActive(false);
             optionsCanvas.gameObject.SetActive(true);
+            canvasSwapped = true;
         }
         else if (button == "back")
         {
             currentCanvas.gameObject.SetActive(false);
             menuCanvas.gameObject.SetActive(true);
+                canvasSwapped = true;
+        }
+        else if(button == "lvl")
+        {
+            GameManager.Instance.NewGameState(GameManager.Instance.stateGamePlaying);
+            Application.LoadLevel("game");
         }
     }
 
@@ -126,9 +135,9 @@ public class MenuManager : MonoBehaviour
         {
             if(i == btn)
             {
+                buttonPushed = "lvl";
                 LevelManager.Instance.levelChosen = i;
-                GameManager.Instance.NewGameState(GameManager.Instance.stateGamePlaying);
-                Application.LoadLevel("game");
+                transitioning = true;
             }
         }
     }

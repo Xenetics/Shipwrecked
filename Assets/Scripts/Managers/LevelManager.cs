@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
     public LevelData[] levels;
 
     public int levelChosen { get; set; }
+    public int totalLevels { get; set; }
 
 	void Start () 
     {
@@ -53,6 +54,7 @@ public class LevelManager : MonoBehaviour
         XmlNodeList myNodeList = doc.SelectNodes(xmlPathPattern);
 
         levels = new LevelData[myNodeList.Count];
+        totalLevels = myNodeList.Count;
         int count = 0;
         foreach (XmlNode node in myNodeList)
         {
@@ -100,4 +102,5 @@ public class LevelManager : MonoBehaviour
         }
         return new LevelData();
     }
+
 }

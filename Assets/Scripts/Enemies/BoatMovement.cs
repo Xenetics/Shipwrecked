@@ -12,6 +12,7 @@ public class BoatMovement : BoatBehaviour
     public Sensor rightSensor;
     private EnemyStats stats;
     private float deathTimer;
+    private bool allocate = false;
 
 	void Start () 
     {
@@ -21,18 +22,27 @@ public class BoatMovement : BoatBehaviour
 	
 	void Update () 
     {
-        if (stats.isAlive)
+        if (GameManager.WhatState() == "playing" && InGameUIManager.Instance.paused == false)
         {
-            wander(speed);
-            Sway(swaySpeed, maxSwayAngle);
-            Bobbing(bobSpeed);
-        }
-        else
-        {
-            deathTimer -= Time.deltaTime;
-            if(deathTimer <= 0.0f)
+            if (stats.isAlive)
             {
-                Sink(sinkSpeed, swaySpeed);
+                wander(speed);
+                Sway(swaySpeed, maxSwayAngle);
+                Bobbing(bobSpeed);
+            }
+            else
+            {
+                deathTimer -= Time.deltaTime;
+                if (deathTimer <= 0.0f)
+                {
+                    Sink(sinkSpeed, swaySpeed);
+                    if (!allocate)
+                    {
+                        BoatManager.Instance.boatsLeft--;
+                        InGameUIManager.Instance.AddScore(stats.pointWorth);
+                        allocate = true;
+                    }
+                }
             }
         }
 	}

@@ -5,11 +5,11 @@
   </level>
   <level>
     <name>2</name>
-    <ships>smsssmmssm</ships>
+    <ships>smssmsmm</ships>
   </level>
   <level>
     <name>3</name>
-    <ships>slsssllssl</ships>
+    <ships>slsslsll</ships>
   </level>
   <level>
     <name>4</name>
@@ -17,26 +17,26 @@
   </level>
   <level>
     <name>5</name>
-    <ships>ssssssssss</ships>
+    <ships>smsllsmmsllmm</ships>
   </level>
   <level>
     <name>6</name>
-    <ships>ssssssssss</ships>
+    <ships>msmllmllmssll</ships>
   </level>
   <level>
     <name>7</name>
-    <ships>ssssssssss</ships>
+    <ships>lslmmllmmssmmll</ships>
   </level>
   <level>
     <name>8</name>
-    <ships>ssssssssss</ships>
+    <ships>mlmllssmmllmmll</ships>
   </level>
   <level>
     <name>9</name>
-    <ships>ssssssssss</ships>
+    <ships>mmmmmmmmmmmmmmm</ships>
   </level>
   <level>
     <name>10</name>
-    <ships>ssssssssss</ships>
+    <ships>lllllllllllllll</ships>
   </level>
 </levels>
