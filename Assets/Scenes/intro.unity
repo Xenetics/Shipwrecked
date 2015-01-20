@@ -398,8 +398,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MusicPlayer:
-  - {fileID: 0}
-  Sounds: []
+  - {fileID: 137774, guid: 23a87596910a36e44b6cff2c4f59bae8, type: 2}
+  - {fileID: 133014, guid: 8d649c89bd5b570409348c3e7f8460c0, type: 2}
+  Sounds:
+  - {fileID: 8300000, guid: 6bb42692ded47cb45b09d31eaf6c3e8e, type: 3}
+  - {fileID: 8300000, guid: b99fa37ead4da9949a278dca173fad12, type: 3}
+  - {fileID: 8300000, guid: 9fc0d75eb405eb84cad351476fc21cc3, type: 3}
+  - {fileID: 8300000, guid: 705a5ab76fcee9a43a353f91a87b369b, type: 3}
+  - {fileID: 8300000, guid: 35b1395966c5b9c43b094bb7f2d16917, type: 3}
 --- !u!114 &1843530422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +439,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
       propertyPath: Sounds.Array.size
-      value: 0
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: MusicPlayer.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
       propertyPath: m_LocalPosition.x
@@ -467,6 +477,34 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: Sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6bb42692ded47cb45b09d31eaf6c3e8e, type: 3}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: MusicPlayer.Array.data[0]
+      value: 
+      objectReference: {fileID: 137774, guid: 23a87596910a36e44b6cff2c4f59bae8, type: 2}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: MusicPlayer.Array.data[1]
+      value: 
+      objectReference: {fileID: 133014, guid: 8d649c89bd5b570409348c3e7f8460c0, type: 2}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: Sounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b99fa37ead4da9949a278dca173fad12, type: 3}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: Sounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9fc0d75eb405eb84cad351476fc21cc3, type: 3}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: Sounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 705a5ab76fcee9a43a353f91a87b369b, type: 3}
+    - target: {fileID: 11400000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
+      propertyPath: Sounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 35b1395966c5b9c43b094bb7f2d16917, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 84c6cbb3728883240ba29ea218dab201, type: 2}
   m_RootGameObject: {fileID: 1843530419}

@@ -38,6 +38,7 @@ public class BoatMovement : BoatBehaviour
                     Sink(sinkSpeed, swaySpeed);
                     if (!allocate)
                     {
+                        AudioManager.Instance.PlaySound("crunch");
                         BoatManager.Instance.boatsLeft--;
                         InGameUIManager.Instance.AddScore(stats.pointWorth);
                         allocate = true;

@@ -23,7 +23,7 @@ public class StateGameMenu : GameState
     }
     public override void StateGUI()
     {
-        GUILayout.Label("Menu");
+        //GUILayout.Label("Menu");
         /*
         GUI.skin = GuiManager.GetSkin();
         GUI.depth = 1;

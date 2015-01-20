@@ -217,15 +217,10 @@ public class BoatManager : MonoBehaviour
 
     public void  NextLevel()
     {
-        if (LevelManager.Instance.levelChosen < LevelManager.Instance.totalLevels)
-        {
-            LevelManager.Instance.levelChosen++;
-        }
         levelNumber = LevelManager.Instance.levelChosen;
         GetLevelData();
         boatsLeft = boatsInLevel;
         boatToSpawn = 0;
-
-        StarterShips();
+        Reset();
     }
 }

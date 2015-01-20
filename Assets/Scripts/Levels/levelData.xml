@@ -2,41 +2,51 @@
   <level>
     <name>1</name>
     <ships>sml</ships>
+    <creatures>smlss</creatures>
   </level>
   <level>
     <name>2</name>
     <ships>smssmsmm</ships>
+    <creatures>smlms</creatures>
   </level>
   <level>
     <name>3</name>
     <ships>slsslsll</ships>
+    <creatures>smlms</creatures>
   </level>
   <level>
     <name>4</name>
     <ships>msmsllmmss</ships>
+    <creatures>smlms</creatures>
   </level>
   <level>
     <name>5</name>
     <ships>smsllsmmsllmm</ships>
+    <creatures>mmlmm</creatures>
   </level>
   <level>
     <name>6</name>
     <ships>msmllmllmssll</ships>
+    <creatures>lsmsl</creatures>
   </level>
   <level>
     <name>7</name>
     <ships>lslmmllmmssmmll</ships>
+    <creatures>mlmlm</creatures>
   </level>
   <level>
     <name>8</name>
     <ships>mlmllssmmllmmll</ships>
+    <creatures>lmlml</creatures>
   </level>
   <level>
     <name>9</name>
     <ships>mmmmmmmmmmmmmmm</ships>
+    <creatures>mmmmm</creatures>
   </level>
   <level>
     <name>10</name>
     <ships>lllllllllllllll</ships>
+    <creatures>lllll</creatures>
   </level>
 </levels>

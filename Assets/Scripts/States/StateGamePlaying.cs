@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class StateGamePlaying : GameState 
 {
-	private bool isPaused = false;
 	
 	public StateGamePlaying(GameManager manager):base(manager){	}
 	
@@ -20,23 +19,12 @@ public class StateGamePlaying : GameState
 	
 	public override void StateUpdate() 
 	{
-		if (Input.GetKeyDown(KeyCode.Escape)) 
-		{
-			if (isPaused)
-			{
-				ResumeGameMode();
-			}
-			else
-			{
-				PauseGameMode();
-			}
-		}
         Screen.showCursor = true;
 	}
 	
 	public override void StateGUI() 
 	{
-        GUILayout.Label("Playing");
+        //GUILayout.Label("Playing");
 
         /*
         GUI.skin = GuiManager.GetSkin();
@@ -77,19 +65,5 @@ public class StateGamePlaying : GameState
 
         }
         */
-	}
-	
-	private void ResumeGameMode() 
-	{
-		Time.timeScale = 1.0f;
-		isPaused = false;
-        InGameUIManager.Instance.Paused(false);
-	}
-	
-	private void PauseGameMode() 
-	{
-		Time.timeScale = 0.0f;
-		isPaused = true;
-        InGameUIManager.Instance.Paused(true);
 	}
 }

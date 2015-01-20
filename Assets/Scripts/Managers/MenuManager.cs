@@ -15,17 +15,26 @@ public class MenuManager : MonoBehaviour
     private float transitionTimer = 2.0f;
     private float transitionTimerActual;
     private bool transitioning = false;
-    [SerializeField]
-    public ButtonBehaviour playButton;
+
     [SerializeField]
     private Canvas menuCanvas;
+
     [SerializeField]
     private Canvas levelsCanvas;
     private Button[] lvlButtons;
+
     [SerializeField]
     private Canvas creditsCanvas;
+
     [SerializeField]
     private Canvas optionsCanvas;
+    [SerializeField]
+    private Image soundOn;
+    [SerializeField]
+    private Image soundOff;
+
+    [SerializeField]
+    private Canvas highScoreCanvas;
 
     private Canvas currentCanvas;
     private bool canvasSwapped = false;
@@ -47,7 +56,7 @@ public class MenuManager : MonoBehaviour
             transitionMonster.transform.position = temp;
             transitionTimerActual -= Time.deltaTime;
 
-            if (transitionTimerActual <= 1 && canvasSwapped == false)
+            if (transitionTimerActual <= 0.7f && canvasSwapped == false)
             {
                 Transition(buttonPushed);
             }
@@ -62,13 +71,29 @@ public class MenuManager : MonoBehaviour
             }
         }
 
+        if(currentCanvas == levelsCanvas)
+        {
+            for(int i = 0; i < lvlButtons.Length; ++i)
+            {
+                if(i < PlayerPrefs.GetInt("level") || i == 0)
+                {
+                    lvlButtons[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    lvlButtons[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        SoundImage();
 	}
 
     private void Transition(string button)  // swap enabled canvases
     {
         if (button == "play")
         {
-            menuCanvas.gameObject.SetActive(false);
+            currentCanvas.gameObject.SetActive(false);
+            currentCanvas = levelsCanvas;
             levelsCanvas.gameObject.SetActive(true);
             canvasSwapped = true;
             if (lvlButtons == null)
@@ -78,21 +103,31 @@ public class MenuManager : MonoBehaviour
         }
         else if (button == "credits")
         {
-            menuCanvas.gameObject.SetActive(false);
+            currentCanvas.gameObject.SetActive(false);
+            currentCanvas = creditsCanvas;
             creditsCanvas.gameObject.SetActive(true);
             canvasSwapped = true;
         }
         else if (button == "options")
         {
-            menuCanvas.gameObject.SetActive(false);
+            currentCanvas.gameObject.SetActive(false);
+            currentCanvas = optionsCanvas;
             optionsCanvas.gameObject.SetActive(true);
+            canvasSwapped = true;
+        }
+        else if (button == "highscores")
+        {
+            currentCanvas.gameObject.SetActive(false);
+            currentCanvas = highScoreCanvas;
+            highScoreCanvas.gameObject.SetActive(true);
             canvasSwapped = true;
         }
         else if (button == "back")
         {
             currentCanvas.gameObject.SetActive(false);
+            currentCanvas = menuCanvas;
             menuCanvas.gameObject.SetActive(true);
-                canvasSwapped = true;
+            canvasSwapped = true;
         }
         else if(button == "lvl")
         {
@@ -103,30 +138,44 @@ public class MenuManager : MonoBehaviour
 
     public void PlayButton()
     {
+        AudioManager.Instance.PlaySound("button");
         buttonPushed = "play";
-        currentCanvas = levelsCanvas;
         transitioning = true;
     }
 
     public void CreditButton()
     {
+        AudioManager.Instance.PlaySound("button");
         buttonPushed = "credits";
-        currentCanvas = creditsCanvas;
         transitioning = true;
     }
 
     public void OptionsButton()
     {
+        AudioManager.Instance.PlaySound("button");
         buttonPushed = "options";
-        currentCanvas = optionsCanvas;
+        transitioning = true;
+    }
+
+    public void HighScoreButton()
+    {
+        AudioManager.Instance.PlaySound("button");
+        buttonPushed = "highscores";
         transitioning = true;
     }
 
     public void BackButton()
     {
+        AudioManager.Instance.PlaySound("button");
         buttonPushed = "back";
-        currentCanvas = menuCanvas;
         transitioning = true;
+    }
+
+    public void SoundToggle()
+    {
+        AudioManager.Instance.PlaySound("button");
+        AudioManager.Instance.ToggleMusic(!AudioManager.Instance.IsMusicOn());
+        AudioManager.Instance.ToggleSound(!AudioManager.Instance.IsSoundOn());
     }
 
     public void LevelButton(int btn)
@@ -135,6 +184,7 @@ public class MenuManager : MonoBehaviour
         {
             if(i == btn)
             {
+                AudioManager.Instance.PlaySound("button");
                 buttonPushed = "lvl";
                 LevelManager.Instance.levelChosen = i;
                 transitioning = true;
@@ -142,18 +192,32 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    void GetLvlButtons()
+    private void GetLvlButtons()
     {
         Button[] potentialBtns = levelsCanvas.GetComponentsInChildren<Button>();
 
-        lvlButtons = new Button[(potentialBtns.Length)];
+        lvlButtons = new Button[(potentialBtns.Length) - 1];
 
         for (int i = 0; i < potentialBtns.Length; ++i)
         {
-            if (potentialBtns[i].name != "Text")
+            if (potentialBtns[i].name[0] == 'l')
             {
                 lvlButtons[i] = potentialBtns[i];
             }
+        }
+    }
+
+    private void SoundImage()
+    {
+        if(AudioManager.Instance.IsMusicOn())
+        {
+            soundOn.gameObject.SetActive(true);
+            soundOff.gameObject.SetActive(false);
+        }
+        else
+        {
+            soundOn.gameObject.SetActive(false);
+            soundOff.gameObject.SetActive(true);
         }
     }
 }

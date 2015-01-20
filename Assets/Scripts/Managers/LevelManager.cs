@@ -9,6 +9,8 @@ public struct LevelData
     public int level;
     public int totalShips;
     public char[] shipOrder;
+    public int totalCreatures;
+    public char[] creatureOrder;
 }
 
 public class LevelManager : MonoBehaviour 
@@ -31,6 +33,7 @@ public class LevelManager : MonoBehaviour
 
         string textData = levelXML.text;
         ParseXML(textData);
+        levelsAvailable = PlayerPrefs.GetInt("level");
     }
 
     [SerializeField]
@@ -40,10 +43,11 @@ public class LevelManager : MonoBehaviour
 
     public int levelChosen { get; set; }
     public int totalLevels { get; set; }
+    public int levelsAvailable { get; set; }
 
 	void Start () 
     {
-	
+        
 	}
 
     private void ParseXML(string xml) // parses the data out of the Xml
@@ -67,6 +71,7 @@ public class LevelManager : MonoBehaviour
     {
         XmlNode levelNode = node.FirstChild;
         XmlNode shipsNode = levelNode.NextSibling;
+        XmlNode creaturesNode = shipsNode.NextSibling;
 
         LevelData temp = new LevelData();
 
@@ -77,6 +82,15 @@ public class LevelManager : MonoBehaviour
         foreach(char ship in shipsNode.InnerXml)
         {
             temp.shipOrder[count] = shipsNode.InnerXml[count];
+            count++;
+        }
+
+        temp.totalCreatures = creaturesNode.InnerXml.Length;
+        temp.creatureOrder = new char[temp.totalCreatures];
+        count = 0;
+        foreach (char creature in creaturesNode.InnerXml)
+        {
+            temp.creatureOrder[count] = creaturesNode.InnerXml[count];
             count++;
         }
 
@@ -102,5 +116,9 @@ public class LevelManager : MonoBehaviour
         }
         return new LevelData();
     }
-
+    
+    public void SaveLevelProgress(int level)
+    {
+        PlayerPrefs.SetInt("level", level);
+    }
 }

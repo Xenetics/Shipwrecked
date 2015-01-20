@@ -21,25 +21,26 @@ public class AudioManager : MonoBehaviour
 		}
 
         musicOn = true;
+        soundOn = true;
         leaveState = false;
 	}
 
-    private int musicAmount = 1;
     public GameObject[] MusicPlayer; // maked this an array to use multiple musics so its a more general sound manager.
     private GameObject[] Musics;
     public AudioClip[] Sounds;
     public bool musicOn { get; set; }
+    public bool soundOn { get; set; }
     public bool leaveState { get; set; }
      
 	void Start () 
 	{
-        Musics = new GameObject[musicAmount];
-        //FillMusics();
+        Musics = new GameObject[MusicPlayer.Length];
+        FillMusics();
 	}
 	
 	void Update () 
 	{
-        //ApplyMute(); used for multi scene
+        ApplyMute();
 	}
 
     void LateUpdate()
@@ -51,7 +52,7 @@ public class AudioManager : MonoBehaviour
 	{
         for(int i = 0; i < Sounds.Length; ++i)
         {
-            if(toPlay == Sounds[i].name)
+            if(soundOn && toPlay == Sounds[i].name)
             {
                 AudioSource.PlayClipAtPoint(Sounds[i], Camera.main.transform.position);
             }
@@ -62,7 +63,7 @@ public class AudioManager : MonoBehaviour
     {
         for(int i = 0; i < Musics.Length; ++i)
         {
-            string tempName = Application.loadedLevelName + "(Clone)";
+            string tempName = Application.loadedLevelName;
             if (musicOn && tempName == Musics[i].gameObject.name)
             {
                 Musics[i].audio.mute = false;
@@ -82,23 +83,36 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-    /*
+    
     private void FillMusics()
     {
-        GameObject add0 = (GameObject)Instantiate(MusicPlayer, Camera.main.transform.position, Quaternion.identity);
-        Musics[0] = add0;
-        Musics[0].transform.parent = gameObject.transform;
-        //Musics[0].audio.mute = true;
-        Musics[0].audio.mute = false;
+        for(int i = 0; i < MusicPlayer .Length; ++i)
+        {
+            GameObject add = (GameObject)Instantiate(MusicPlayer[i], Camera.main.transform.position, Quaternion.identity);
+            add.name = MusicPlayer[i].name;
+            Musics[i] = add;
+            Musics[i].transform.parent = gameObject.transform;
+            Musics[i].audio.mute = true;
+        }
     }
-    */
+    
     public void ToggleMusic(bool toggle)
     {
         musicOn = toggle;
     }
 
+    public void ToggleSound(bool toggle)
+    {
+        soundOn = toggle;
+    }
+
     public bool IsMusicOn()
     {
         return musicOn;
+    }
+
+    public bool IsSoundOn()
+    {
+        return soundOn;
     }
 }

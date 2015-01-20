@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
     private bool attacking = false;
     private bool eating = false;
+    private bool falling = false;
     private float eatTime;
     public float speed = 150.0F;
     public float attackSpeed = 50.0F;
@@ -49,28 +50,25 @@ public class PlayerController : MonoBehaviour
             {
                 if (grounded)
                 {
-                    hSpeed = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-                    hSpeed *= Time.deltaTime;
-                    entity.transform.Translate(hSpeed, 0, 0, null);
-
                     if (Input.GetButtonDown("Jump"))
                     {
+                        AudioManager.Instance.PlaySound("attack");
                         attacking = true;
                     }
                 }
+                if (!eating)
+                {
+                    hSpeed = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                    hSpeed *= Time.deltaTime;
+                    entity.transform.Translate(hSpeed, 0, 0, null);
+                    entity.transform.Translate(0, -(Time.deltaTime * gravity), 0, null);
+                }
                 else
                 {
-                    if (!eating)
+                    eatTime -= Time.deltaTime;
+                    if (eatTime <= 0.0f)
                     {
-                        entity.transform.Translate(0, -(Time.deltaTime * gravity), 0, null);
-                    }
-                    else
-                    {
-                        eatTime -= Time.deltaTime;
-                        if (eatTime <= 0.0f)
-                        {
-                            eating = false;
-                        }
+                        eating = false;
                     }
                 }
 
@@ -82,10 +80,12 @@ public class PlayerController : MonoBehaviour
                 if (entity.transform.position.y >= seaLevel)
                 {
                     attacking = false;
+                    falling = true;
                 }
 
                 if (entity.transform.position.y <= groundLevel)
                 {
+                    falling = false;
                     grounded = true;
                 }
                 else
@@ -127,6 +127,12 @@ public class PlayerController : MonoBehaviour
                 other.gameObject.collider.enabled = false;
                 BoatManager.Instance.boatsAfloat--;
             }
+        }
+        
+        if (other.gameObject.tag == "creature" && !falling)
+        {
+            AudioManager.Instance.PlaySound("munch");
+            CreatureManager.Instance.KillCreature(other.gameObject);
         }
     }
 
