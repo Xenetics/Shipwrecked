@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
                 eating = true;
                 eatTime = target.timeToEat;
                 target.isAlive = false;
-                other.gameObject.collider.enabled = false;
+                other.gameObject.GetComponent<Collider>().enabled = false;
                 BoatManager.Instance.boatsAfloat--;
             }
         }
